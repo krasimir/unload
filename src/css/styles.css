@@ -7,7 +7,7 @@ body, html {
   width: 100%;
   height: 100%;
   color: #333333;
-  background: #FFF;
+  background: #e5e5e5;
 }
 * {
   box-sizing: border-box;
@@ -81,19 +81,19 @@ p {
   display: inline-block;
 }
 .bt1 {
-  border-top: solid 1px #e2e2e2;
+  border-top: dotted 1px #000;
 }
 .bl1 {
-  border-left: solid 1px #e2e2e2;
+  border-left: dotted 1px #000;
 }
 .bl2 {
-  border-left: solid 2px #e2e2e2;
+  border-left: dotted 2px #000;
 }
 .bb1 {
-  border-bottom: solid 1px #e2e2e2;
+  border-bottom: dotted 1px #000;
 }
 .bb2 {
-  border-bottom: solid 2px #e2e2e2;
+  border-bottom: dotted 2px #000;
 }
 .cf::before, .cf::after {
   content: " ";
@@ -199,6 +199,9 @@ hr {
 .pl1 {
   padding-left: 1em;
 }
+.pr1 {
+  padding-right: 1em;
+}
 .pt1 {
   padding-top: 1em;
 }
@@ -238,7 +241,55 @@ hr {
 }
 
 /******************************************** layout */
+#app {
+  width: 100%;
+  height: 100%;
+}
 .layout {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 40% 60%;
+  width: 100%;
+  height: 100%;
+}
+
+/******************************************** layout */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(1.05); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.wallpaper {
+  width: 100%;
+  height: 100%;
+}
+.wallpaper a {
+  cursor: pointer;
+}
+.image-wrapper {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  animation: fadeIn 400ms;
+  overflow: hidden;
+}
+.image-controls {
+  font-size: 0.8em;
+  line-height: 1.3em;
+  margin: 0;
+  padding: 0.4em 0.6em;
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+  background: rgba(255, 255, 255, 0.4);
+  display: grid;
+  grid-template-columns: 1fr 80px;
+}
+.image-loading {
+  padding: 1em;
 }

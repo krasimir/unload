@@ -1,6 +1,7 @@
-const USE_MOCK = true;
+const USE_MOCK = false;
 const AK = '563492ad6f917000010000018fedee73b8fd45eeab685d32eabdaa57';
 const LS_IMAGE_ITEM = 'unload_image';
+const LS_DATA_ITEM = 'unload_data';
 
 import mockedAPIResponse from '../../_mocks/curated.json';
 
@@ -22,7 +23,7 @@ export default async function loadImage({ data, state }) {
   const getImage = image.mutate(() => null).mutate(async (current, shouldFetchANewOne) => {
     let data;
 
-    if (pin() && !shouldFetchANewOne) {
+    if (pin()) {
       return JSON.parse(localStorage.getItem(LS_IMAGE_ITEM));
     }
 
@@ -30,10 +31,15 @@ export default async function loadImage({ data, state }) {
       if (USE_MOCK) {
         data = mockedAPIResponse;
       } else {
-        data = await (await fetch(
-          'https://api.pexels.com/v1/curated?per_page=20&page=1',
-          { headers: { Authorization: AK } }
-        )).json();
+        if (!localStorage.getItem(LS_DATA_ITEM) || shouldFetchANewOne) {
+          data = await (await fetch(
+            'https://api.pexels.com/v1/curated?per_page=30&page=1',
+            { headers: { Authorization: AK } }
+          )).json();
+          localStorage.setItem(LS_DATA_ITEM, JSON.stringify(data));
+        } else {
+          data = JSON.parse(localStorage.getItem(LS_DATA_ITEM));
+        }
       }
 
       const photo = data.photos[random(0, 20)];
@@ -43,6 +49,7 @@ export default async function loadImage({ data, state }) {
       const imageStr = arrayBufferToBase64(buffer);
 
       unpinImage();
+
       return {
         data: base64Flag + imageStr,
         author: {
@@ -55,6 +62,7 @@ export default async function loadImage({ data, state }) {
       if (localStorage.getItem(LS_IMAGE_ITEM)) {
         return JSON.parse(localStorage.getItem(LS_IMAGE_ITEM));
       }
+      return null;
     }
   });
   const pinImage = pin.mutate(current => {

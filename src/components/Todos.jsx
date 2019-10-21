@@ -36,7 +36,7 @@ function Todos({ mode, changeMode, todos, toggle, update, reorder, del }) {
           <DragDropContext onDragEnd={ moveTodo }>
             <Droppable droppableId="droppable">
               {
-                (provided, snapshot) => (
+                (provided) => (
                   <ul
                     ref={ provided.innerRef }
                     { ...provided.droppableProps }>
@@ -46,7 +46,7 @@ function Todos({ mode, changeMode, todos, toggle, update, reorder, del }) {
                           <Draggable key={ todo.id } draggableId={ todo.id } index={ index }>
                             {(provided) => (
                               <div
-                                className='mb05'
+                                className='mb03'
                                 ref={ provided.innerRef }
                                 { ...provided.draggableProps }
                                 { ...provided.dragHandleProps }>

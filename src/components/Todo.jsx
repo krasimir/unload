@@ -1,14 +1,15 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import riew from 'riew/react';
 
-import manageTodo from './effects/todo';
 import Trash from './icons/Trash.jsx';
 import Square from './icons/Square.jsx';
 import SquareCheck from './icons/SquareCheck.jsx';
 import Edit from './icons/Edit.jsx';
 
-function Todo({ todo, toggle, update, editMode, toggleEditMode, del }) {
+function Todo({ todo, toggle, update, defaultEditMode, del, onClose }) {
   const field = useRef(null);
+  const [ editMode, toggleEditMode ] = useState(defaultEditMode);
+  const isItANewTodo = !update && !del;
 
   useEffect(() => {
     if (editMode) {
@@ -18,10 +19,13 @@ function Todo({ todo, toggle, update, editMode, toggleEditMode, del }) {
   }, [ editMode ]);
 
   function onFieldChange(e) {
+    const newTodo = { ...todo, text: e.target.value };
+
     if (e.keyCode === 27) {
       toggleEditMode();
-    } else {
-      update({ ...todo, text: e.target.value });
+      onClose(newTodo);
+    } else if (update) {
+      update(newTodo);
     }
   }
 
@@ -33,17 +37,17 @@ function Todo({ todo, toggle, update, editMode, toggleEditMode, del }) {
 
   return (
     <li className={ `todo ${ todo.done ? 'done' : '' } ${ editMode ? 'editing' : '' }` }>
-      <div className='content'>
+      <div className='content' style={ isItANewTodo ? { display: 'block' } : {} }>
         <div style={ { marginTop: '6px' } }>
           {
             editMode ?
             <div>
-              <a className='todo-action' onClick={ () => toggle(todo) }>
+              { update && <a className='todo-action' onClick={ () => toggle(todo) }>
                 { todo.done ? <SquareCheck size={ 16 }/> : <Square size={ 16 }/> }
-              </a>
-              <a className='todo-action' onClick={ () => deleteTodo(todo) }>
+              </a> }
+              { del && <a className='todo-action' onClick={ () => deleteTodo(todo) }>
                 <Trash size={ 16 }/>
-              </a>
+              </a> }
             </div> :
             <a className='todo-action' onClick={ () => toggle(todo) }>
               { todo.done ? <SquareCheck size={ 16 }/> : <Square size={ 16 }/> }
@@ -70,4 +74,8 @@ function Todo({ todo, toggle, update, editMode, toggleEditMode, del }) {
   );
 }
 
-export default riew(Todo, manageTodo);
+Todo.defaultProps = {
+  onClose: () => {}
+};
+
+export default riew(Todo);

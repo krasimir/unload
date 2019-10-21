@@ -1,27 +1,7 @@
-export default function manageTodos({ data, state }) {
-  const todos = state([
-    {
-      id: '1a',
-      created: new Date(),
-      finished: new Date(),
-      text: 'Do A',
-      done: false
-    },
-    {
-      id: '2b',
-      created: new Date(),
-      finished: new Date(),
-      text: 'Do B',
-      done: false
-    },
-    {
-      id: '3c',
-      created: new Date(),
-      finished: new Date(),
-      text: 'Do C',
-      done: true
-    }
-  ]);
+import db from './utils/db';
+
+export default async function manageTodos({ data, state }) {
+  const todos = state(await db.getTodos());
   const toggle = todos.mutate((todos, todoToToggle) => {
     return todos.map(todo => ({
       ...todo,
@@ -41,12 +21,23 @@ export default function manageTodos({ data, state }) {
   const del = todos.mutate((todos, todo) => {
     return todos.filter(({ id }) => id !== todo.id);
   });
+  const add = todos.mutate(async (todos, todo) => {
+    const newTodo = await db.addTodo(todo);
+    return [...todos, newTodo ];
+  });
 
   data({
     todos,
     toggle,
     update,
     reorder,
-    del
+    del,
+    add
   });
+}
+
+export function getNewTodo() {
+  return {
+    text: ''
+  };
 }

@@ -1,21 +1,21 @@
 export default function manageTodos({ data, state }) {
   const todos = state([
     {
-      id: 1,
+      id: '1a',
       created: new Date(),
       finished: new Date(),
       text: 'Do A',
       done: false
     },
     {
-      id: 2,
+      id: '2b',
       created: new Date(),
       finished: new Date(),
       text: 'Do B',
       done: false
     },
     {
-      id: 3,
+      id: '3c',
       created: new Date(),
       finished: new Date(),
       text: 'Do C',
@@ -34,10 +34,15 @@ export default function manageTodos({ data, state }) {
       text: todoToUpdate.id === todo.id ? todoToUpdate.text : todo.text
     }));
   });
+  const reorder = todos.mutate((todos, from, to) => {
+    todos.splice(to, 0, todos.splice(from, 1)[0]);
+    return todos;
+  });
 
   data({
     todos,
     toggle,
-    update
+    update,
+    reorder
   });
 }

@@ -2,6 +2,10 @@ import React, { useRef, useEffect } from 'react';
 import riew from 'riew/react';
 
 import manageTodo from './effects/todo';
+import Trash from './icons/Trash.jsx';
+import Square from './icons/Square.jsx';
+import SquareCheck from './icons/SquareCheck.jsx';
+import Edit from './icons/Edit.jsx';
 
 function Todo({ todo, toggle, update, editMode, toggleEditMode }) {
   const field = useRef(null);
@@ -24,7 +28,22 @@ function Todo({ todo, toggle, update, editMode, toggleEditMode }) {
   return (
     <li className={ `todo ${ todo.done ? 'done' : '' } ${ editMode ? 'editing' : '' }` }>
       <div className='content'>
-        <a className='todo-action' onClick={ () => toggle(todo) }>{ todo.done ? '✔' : '☐' }</a>
+        <div className='vac'>
+          {
+            editMode ?
+            <div>
+              <a className='todo-action' onClick={ () => toggle(todo) }>
+                { todo.done ? <SquareCheck size={ 16 }/> : <Square size={ 16 }/> }
+              </a>
+              <a className='todo-action' onClick={ () => toggle(todo) }>
+                <Trash size={ 16 }/>
+              </a>
+            </div> :
+            <a className='todo-action' onClick={ () => toggle(todo) }>
+              { todo.done ? <SquareCheck size={ 16 }/> : <Square size={ 16 }/> }
+            </a>
+          }
+        </div>
         {
           editMode ?
             <div className='text'>
@@ -34,10 +53,12 @@ function Todo({ todo, toggle, update, editMode, toggleEditMode }) {
               { todo.text }
             </div>
         }
-        { editMode ?
-          <a className='todo-action' onClick={ toggleEditMode }>✕</a> :
-          <a className='todo-action edit' onClick={ toggleEditMode }>···</a>
-        }
+        <div className='vac'>
+          { editMode ?
+            null :
+            <a className='todo-action edit' onClick={ toggleEditMode }><Edit size={ 16 }/></a>
+          }
+        </div>
       </div>
     </li>
   );

@@ -6,7 +6,7 @@
   "scripts": {
     "dev-server": "webpack-dev-server --config ./webpack.config.js --mode development --no-inline",
     "dev": "yarn minify-css && concurrently \"onchange ./src/css/*.css -- yarn minify-css\" \"yarn dev-server\"",
-    "minify-css": "cat ./src/css/github.markdown.css ./src/css/styles_generic.css ./src/css/styles.css | uglifycss > ./dist/styles.css",
+    "minify-css": "cat ./src/css/github.markdown.css ./src/css/styles.css | uglifycss > ./dist/styles.css",
     "release": "node ./scripts/version.js && webpack --config ./webpack.prod.js --mode production",
     "lint": "./node_modules/.bin/eslint --ext .js src",
     "dev-site": "serve -l 8090"
@@ -45,6 +45,7 @@
     "onchange": "5.2.0",
     "prop-types": "15.7.2",
     "react": "^16.6.0",
+    "react-beautiful-dnd": "11.0.5",
     "react-dom": "^16.6.0",
     "react-hot-loader": "^4.3.11",
     "react-router-dom": "4.3.1",

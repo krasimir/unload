@@ -9,7 +9,7 @@ import todosMode, { MODE_CLOCK, MODE_NODES } from './effects/todosMode';
 import manageTodos from './effects/todos';
 import Todo from './Todo.jsx';
 
-function Todos({ mode, changeMode, todos, toggle, update, reorder }) {
+function Todos({ mode, changeMode, todos, toggle, update, reorder, del }) {
   const moveTodo = (result) => {
     if (!result.destination) {
       return;
@@ -44,7 +44,7 @@ function Todos({ mode, changeMode, todos, toggle, update, reorder }) {
                       todos.map((todo, index) =>
                         (
                           <Draggable key={ todo.id } draggableId={ todo.id } index={ index }>
-                            {(provided, snapshot) => (
+                            {(provided) => (
                               <div
                                 className='mb05'
                                 ref={ provided.innerRef }
@@ -54,6 +54,7 @@ function Todos({ mode, changeMode, todos, toggle, update, reorder }) {
                                     key={ todo.id }
                                     todo={ todo }
                                     update={ update }
+                                    del={ del }
                                     toggle={ toggle }/>
                               </div>
                             )}

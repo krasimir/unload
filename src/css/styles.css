@@ -359,7 +359,7 @@ nav {
   margin-top: 0.3em;
 }
 .todo.done {
-  opacity: 0.3;
+  opacity: 0.2;
 }
 .todo-action {
   display: block;

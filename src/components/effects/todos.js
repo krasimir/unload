@@ -38,11 +38,15 @@ export default function manageTodos({ data, state }) {
     todos.splice(to, 0, todos.splice(from, 1)[0]);
     return todos;
   });
+  const del = todos.mutate((todos, todo) => {
+    return todos.filter(({ id }) => id !== todo.id);
+  });
 
   data({
     todos,
     toggle,
     update,
-    reorder
+    reorder,
+    del
   });
 }

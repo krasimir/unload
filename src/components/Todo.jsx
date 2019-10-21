@@ -7,7 +7,7 @@ import Square from './icons/Square.jsx';
 import SquareCheck from './icons/SquareCheck.jsx';
 import Edit from './icons/Edit.jsx';
 
-function Todo({ todo, toggle, update, editMode, toggleEditMode }) {
+function Todo({ todo, toggle, update, editMode, toggleEditMode, del }) {
   const field = useRef(null);
 
   useEffect(() => {
@@ -25,17 +25,23 @@ function Todo({ todo, toggle, update, editMode, toggleEditMode }) {
     }
   }
 
+  function deleteTodo(todo) {
+    if (confirm('Are you sure?')) {
+      del(todo);
+    }
+  }
+
   return (
     <li className={ `todo ${ todo.done ? 'done' : '' } ${ editMode ? 'editing' : '' }` }>
       <div className='content'>
-        <div className='vac'>
+        <div style={ { marginTop: '6px' } }>
           {
             editMode ?
             <div>
               <a className='todo-action' onClick={ () => toggle(todo) }>
                 { todo.done ? <SquareCheck size={ 16 }/> : <Square size={ 16 }/> }
               </a>
-              <a className='todo-action' onClick={ () => toggle(todo) }>
+              <a className='todo-action' onClick={ () => deleteTodo(todo) }>
                 <Trash size={ 16 }/>
               </a>
             </div> :

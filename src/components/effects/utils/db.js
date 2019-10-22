@@ -7,13 +7,13 @@ function createDb() {
   const db = new Dexie('unload');
 
   db.version(1).stores({
-    todos: '++id, created, finished, text, done, archived, tags'
+    todos: '++id, created, finished, text, done, archived, tags, order'
   });
 
-  api.getTodos = function () {
+  api.get = function () {
     return db.todos.toArray();
   };
-  api.addTodo = function ({
+  api.add = async function ({
     text,
     created = new Date(),
     finished = null,
@@ -21,17 +21,23 @@ function createDb() {
     archived = false,
     tags = []
   }) {
-    return db.todos.add({
+    const allTodos = await api.get();
+    const maxOrder = Math.max(...allTodos.map(({ order }) => order));
+    const newTodo = {
       created,
       finished,
       text,
       done,
       archived,
-      tags
-    });
+      tags,
+      order: maxOrder + 1
+    };
+
+    newTodo.id = await db.todos.add(newTodo);
+    return newTodo;
   };
   api.delete = async function (id) {
-    const entry = await db.todos.get({ objectId: id });
+    const entry = await db.todos.get({ id });
 
     if (entry) {
       await db.todos.delete(entry.id);
@@ -39,7 +45,7 @@ function createDb() {
       console.warn(`There is no todo with id "${ id }". You are trying to delete it but it is not there.`);
     }
   };
-  api.updateTodo = function (todo) {
+  api.edit = function (todo) {
     return db.todos.put(todo);
   };
 

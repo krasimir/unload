@@ -21,7 +21,7 @@ function Todo({ todo, toggle, update, defaultEditMode, del, onClose }) {
   function onFieldChange(e) {
     const newTodo = { ...todo, text: e.target.value };
 
-    if (e.keyCode === 27) {
+    if (e.keyCode === 27 || (e.keyCode === 13 && e.ctrlKey)) {
       toggleEditMode();
       onClose(newTodo);
     } else if (update) {
@@ -41,14 +41,7 @@ function Todo({ todo, toggle, update, defaultEditMode, del, onClose }) {
         <div style={ { marginTop: '6px' } }>
           {
             editMode ?
-            <div>
-              { update && <a className='todo-action' onClick={ () => toggle(todo) }>
-                { todo.done ? <SquareCheck size={ 16 }/> : <Square size={ 16 }/> }
-              </a> }
-              { del && <a className='todo-action' onClick={ () => deleteTodo(todo) }>
-                <Trash size={ 16 }/>
-              </a> }
-            </div> :
+            null :
             <a className='todo-action' onClick={ () => toggle(todo) }>
               { todo.done ? <SquareCheck size={ 16 }/> : <Square size={ 16 }/> }
             </a>
@@ -60,13 +53,18 @@ function Todo({ todo, toggle, update, defaultEditMode, del, onClose }) {
               <textarea defaultValue={ todo.text } onKeyUp={ onFieldChange } ref={ field }/>
             </div> :
             <div className='text'>
-              { todo.text }
+              { todo.id + ' ' + todo.text }
             </div>
         }
         <div className='vac'>
           { editMode ?
             null :
-            <a className='todo-action edit' onClick={ toggleEditMode }><Edit size={ 16 }/></a>
+            <div className='cf options'>
+              { del && <a className='todo-action right' onClick={ () => deleteTodo(todo) }>
+                <Trash size={ 16 }/>
+              </a> }
+              <a className='todo-action edit right' onClick={ toggleEditMode }><Edit size={ 16 }/></a>
+            </div>
           }
         </div>
       </div>

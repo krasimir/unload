@@ -23,14 +23,16 @@ function Todos({ mode, changeMode, todos, toggle, update, reorder, del, add }) {
     );
   };
 
-  const todosList = () => (
+  const todosList =
     <DragDropContext onDragEnd={ moveTodo }>
       <Droppable droppableId="droppable">
         {
           (provided) => (
             <ul ref={ provided.innerRef } { ...provided.droppableProps }>
               {
-                todos.map((todo, index) =>
+                todos
+                  .sort((a, b) => a.order - b.order)
+                  .map((todo, index) =>
                   (
                     <Draggable key={ todo.id } draggableId={ todo.id } index={ index }>
                       {(provided) => (
@@ -56,8 +58,7 @@ function Todos({ mode, changeMode, todos, toggle, update, reorder, del, add }) {
           )
         }
       </Droppable>
-    </DragDropContext>
-  );
+    </DragDropContext>;
 
   return (
     <div className='todos'>
@@ -74,9 +75,8 @@ function Todos({ mode, changeMode, todos, toggle, update, reorder, del, add }) {
           mode === MODE_CLOCK ?
             <Clock /> :
             <React.Fragment>
-              { todos.length > 0 && todosList() }
               { newTodoUI ?
-                  <ul>
+                  <ul className='mb03'>
                     <Todo
                       defaultEditMode
                       todo={ getNewTodo() }
@@ -88,6 +88,7 @@ function Todos({ mode, changeMode, todos, toggle, update, reorder, del, add }) {
                   <div className='tac mb1'>
                     <a className='todo-action' onClick={ () => isNewTodoUIVisible(true) }><Plus /></a>
                   </div> }
+              { todos.length > 0 && todosList }
             </React.Fragment>
         }
       </div>

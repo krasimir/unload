@@ -125,104 +125,104 @@ hr {
   margin: 0 !important;
 }
 .mt1 {
-  margin-top: 1em;
+  margin-top: 1em !important;
 }
 .mt03 {
-  margin-top: .3em;
+  margin-top: .3em !important;
 }
 .mt05 {
-  margin-top: .5em;
+  margin-top: .5em !important;
 }
 .mb1 {
-  margin-bottom: 1em;
+  margin-bottom: 1em !important;
 }
 .mt2 {
   margin-top: 2em !important;
 }
 .mb2 {
-  margin-bottom: 2em;
+  margin-bottom: 2em !important;
 }
 .ml1 {
-  margin-left: 1em;
+  margin-left: 1em !important;
 }
 .ml2 {
-  margin-left: 2em;
+  margin-left: 2em !important;
 }
 .ml3 {
-  margin-left: 3em;
+  margin-left: 3em !important;
 }
 .mt3 {
-  margin-top: 3em;
+  margin-top: 3em !important;
 }
 .mb1 {
-  margin-bottom: 1em;
+  margin-bottom: 1em !important;
 }
 .mb05 {
-  margin-bottom: .5em;
+  margin-bottom: .5em !important;
 }
 .mb03 {
-  margin-bottom: .3em;
+  margin-bottom: .3em !important;
 }
 .mx03 {
-  margin-left: .3em;
-  margin-right: .3em;
+  margin-left: .3em !important;
+  margin-right: .3em !important;
 }
 .mx05 {
-  margin-left: .5em;
-  margin-right: .5em;
+  margin-left: .5em !important;
+  margin-right: .5em !important;
 }
 .mx1 {
-  margin-left: 1em;
-  margin-right: 1em;
+  margin-left: 1em !important;
+  margin-right: 1em !important;
 }
 .m03 {
-  margin: .3em;
+  margin: .3em !important;
 }
 .my03 {
-  margin-top: .3em;
-  margin-bottom: .3em;
+  margin-top: .3em !important;
+  margin-bottom: .3em !important;
 }
 .my05 {
-  margin-top: .5em;
-  margin-bottom: .5em;
+  margin-top: .5em !important;
+  margin-bottom: .5em !important;
 }
 .my1 {
-  margin-top: 1em;
-  margin-bottom: 1em;
+  margin-top: 1em !important;
+  margin-bottom: 1em !important;
 }
 .pl05 {
-  padding-left: .5em;
+  padding-left: .5em !important;
 }
 .p0 {
   padding: 0 !important;
 }
 .p1 {
-  padding: 1em;
+  padding: 1em !important;
 }
 .pl1 {
-  padding-left: 1em;
+  padding-left: 1em !important;
 }
 .pr1 {
-  padding-right: 1em;
+  padding-right: 1em !important;
 }
 .pt1 {
-  padding-top: 1em;
+  padding-top: 1em !important;
 }
 .px1 {
-  padding-left: 1em;
-  padding-right: 1em;
+  padding-left: 1em !important;
+  padding-right: 1em !important;
 }
 .px05 {
-  padding-left: .5em;
-  padding-right: .5em;
+  padding-left: .5em !important;
+  padding-right: .5em !important;
 }
 .py1 {
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding-top: 1em !important;
+  padding-bottom: 1em !important;
 }
 .py05 {
-  padding-top: .5em;
-  padding-bottom: .5em;
+  padding-top: .5em !important;
+  padding-bottom: .5em !important;
 }
 .fz9 {
   font-size: .9em !important;
@@ -231,16 +231,16 @@ hr {
   font-size: .8em !important;
 }
 .opa5 {
-  opacity: .5;
+  opacity: .5 !important;
 }
 .opa7 {
-  opacity: .7;
+  opacity: .7 !important;
 }
 .lh0 {
-  line-height: 0;
+  line-height: 0 !important;
 }
 .rel {
-  position: relative;
+  position: relative !important;
 }
 
 /******************************************** layout */
@@ -353,10 +353,10 @@ nav {
 }
 .todo .content {
   display: grid;
-  grid-template-columns: 40px 1fr 40px;
+  grid-template-columns: 36px 1fr 80px;
 }
 .todo.editing .content {
-  grid-template-columns: 40px 1fr;
+  display: block;
 }
 .todo + .todo {
   margin-top: 0.3em;
@@ -378,11 +378,11 @@ nav {
   color: #000;
   opacity: 1;
 }
-.todo .edit {
-  visibility: hidden;
+.todo .options .todo-action {
+  display: none;
 }
-.todo:hover .edit {
-  visibility: visible;
+.todo:hover .options .todo-action {
+  display: inline-block;
 }
 .text {
   padding: 0.5em;

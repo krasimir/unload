@@ -7,7 +7,7 @@
     "dev-server": "webpack-dev-server --config ./webpack.config.js --mode development --no-inline",
     "dev-start": "yarn minify-css && concurrently \"onchange ./src/css/*.css -- yarn minify-css\" \"yarn dev-server\"",
     "minify-css": "cat ./src/css/github.markdown.css ./src/css/styles.css | uglifycss > ./dist/styles.css",
-    "release": "node ./scripts/version.js && webpack --config ./webpack.prod.js --mode production",
+    "release": "webpack --config ./webpack.prod.js --mode production && rm -rf ./packages/* && node ./scripts/zip.js",
     "lint": "./node_modules/.bin/eslint --ext .js src",
     "dev-site": "serve -l 8090"
   },
@@ -56,5 +56,8 @@
     "webpack": "^4.23.1",
     "webpack-cli": "^3.1.2",
     "webpack-dev-server": "^3.1.10"
+  },
+  "dependencies": {
+    "zip-folder": "1.0.0"
   }
 }

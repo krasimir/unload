@@ -70,7 +70,7 @@ function Todos({ mode, changeMode, todos, toggle, update, reorder, del, add }) {
           <ClockIcon />
         </a>
       </nav>
-      <div>
+      <div className={ mode === MODE_CLOCK ? 'vac' : '' }>
         {
           mode === MODE_CLOCK ?
             <Clock /> :

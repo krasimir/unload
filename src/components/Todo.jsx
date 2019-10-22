@@ -50,6 +50,12 @@ function Todo({ todo, toggle, update, defaultEditMode, del, onClose }) {
       update(newTodo);
     }
   }
+  function onBlur() {
+    const newTodo = { ...todo, text: field.current.value };
+
+    toggleEditMode();
+    onClose(newTodo);
+  }
 
   function deleteTodo(todo) {
     if (confirm('Are you sure?')) {
@@ -72,7 +78,7 @@ function Todo({ todo, toggle, update, defaultEditMode, del, onClose }) {
         {
           editMode ?
             <div className='text'>
-              <textarea defaultValue={ todo.text } onKeyUp={ onFieldChange } ref={ field }/>
+              <textarea defaultValue={ todo.text } onKeyUp={ onFieldChange } ref={ field } onBlur={ onBlur } />
             </div> :
             <div className='text' dangerouslySetInnerHTML={ { __html: formatText(todo.text) } } />
         }

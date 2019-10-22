@@ -24,8 +24,8 @@ function Image({ image, getImage, pinImage, pin }) {
     );
   }
   return (
-    <div className='image-loading'>
-      <small>...</small>
+    <div className='image-loading tac'>
+      <small>Loading the image. Please wait.</small>
     </div>
   );
 }

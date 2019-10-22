@@ -2,6 +2,8 @@
 
 A Chrome extension to unload your thoughts.
 
+👉 [Chrome web store](https://chrome.google.com/webstore/detail/unload/kokhekjlkeaeebldpgembnjieliikjcg)
+
 ---
 
 A simplistic new-tab page.

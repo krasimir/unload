@@ -7,11 +7,14 @@ import ClockIcon from './icons/Clock.jsx';
 import Clock from './Clock.jsx';
 import Trash from './icons/Trash.jsx';
 import todosMode, { MODE_CLOCK, MODE_NODES } from './effects/todosMode';
+import todosTheme, { THEME_DARK, THEME_LIGHT } from './effects/todosTheme';
 import manageTodos, { getNewTodo } from './effects/todos';
 import Todo from './Todo.jsx';
 import Plus from './icons/Plus.jsx';
+import Sun from './icons/Sun.jsx';
+import Moon from './icons/Moon.jsx';
 
-function Todos({ mode, changeMode, todos, toggle, update, reorder, del, add, clearCompleted }) {
+function Todos({ mode, changeMode, todos, toggle, update, reorder, del, add, clearCompleted, theme, changeTheme }) {
   const [ newTodoUI, isNewTodoUIVisible ] = useState(false);
   const completed = todos.filter(({ done }) => done).length;
 
@@ -63,13 +66,16 @@ function Todos({ mode, changeMode, todos, toggle, update, reorder, del, add, cle
     </DragDropContext>;
 
   return (
-    <div className='todos'>
+    <div className={ `todos ${ theme === THEME_LIGHT ? 'light' : 'dark' }` }>
       <nav className='tac'>
         <a className={ mode === MODE_NODES ? 'selected' : '' } onClick={ () => changeMode(MODE_NODES) }>
           <FileText />
         </a>
         <a className={ mode === MODE_CLOCK ? 'selected' : '' } onClick={ () => changeMode(MODE_CLOCK) }>
           <ClockIcon />
+        </a>
+        <a onClick={ () => changeTheme(theme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT) }>
+          { theme === THEME_LIGHT ? <Moon /> : <Sun /> }
         </a>
       </nav>
       <div className={ mode === MODE_CLOCK ? 'vac' : '' }>
@@ -112,4 +118,4 @@ Todos.defaultProps = {
   todos: []
 };
 
-export default riew(Todos, todosMode, manageTodos);
+export default riew(Todos, todosMode, manageTodos, todosTheme);

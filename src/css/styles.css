@@ -297,9 +297,13 @@ hr {
   position: absolute;
   bottom: 1em;
   right: 1em;
-  background: rgba(255, 255, 255, 0.2);
   display: grid;
   grid-template-columns: 1fr 80px;
+  background: rgba(255, 255, 255, 0);
+  transition: background 400ms ease-out;
+}
+.image-controls:hover {
+  background: rgba(255, 255, 255, 0.8);
 }
 .image-loading {
   padding: 6em;
@@ -322,6 +326,9 @@ hr {
   display: grid;
   grid-template-rows: 100px 1fr;
 }
+.dark.todos {
+  background: #1c1c1c;
+}
 nav {
   text-align: center;
   margin-bottom: 2em;
@@ -341,12 +348,18 @@ nav a:hover {
   background: none;
   color: #000;
 }
+.dark nav a:hover {
+  color: #ebebeb;
+}
 nav {
   padding: 1em;
 }
 .clock {
   text-align: center;
   align-self: center;
+}
+.dark .clock {
+  color: #757575;
 }
 .clock h1 {
   font-weight: 100;
@@ -367,6 +380,10 @@ nav {
   max-height: 207px;
   overflow-y: auto;
 }
+.dark .todo {
+  background: #101010;
+  color: #999;
+}
 .todo .content {
   display: grid;
   grid-template-columns: 36px 1fr 80px;
@@ -380,6 +397,9 @@ nav {
 .todo.done {
   opacity: 0.2;
 }
+.dark .todo .text a {
+  color: #fff;
+}
 .todo-action {
   display: inline-block;
   cursor: pointer;
@@ -389,10 +409,17 @@ nav {
   border-radius: 4px;
   line-height: 0;
 }
+.dark .todo-action {
+  color: #999;
+}
 .todo-action:hover {
   background: #d5d5d5;
   color: #000;
   opacity: 1;
+}
+.dark .todo-action:hover {
+  background: #232323;
+  color: #ebebeb;
 }
 .todo .options {
   padding-top: 6px;
@@ -417,10 +444,16 @@ nav {
   height: 150px;
   resize: none;
 }
+.dark .text textarea {
+  color: #999;
+}
 footer {
   margin: 2em 0;
   font-size: 0.8em;
 }
 footer a {
   display: inline-block;
+}
+.dark footer {
+  color: #4e4e4e;
 }

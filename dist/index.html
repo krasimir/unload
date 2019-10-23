@@ -4,13 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- <link rel="shortcut icon" type="image/png" href="/img/favicon.png"/> -->
-  <title>Unload</title>
+  <title>...</title>
   <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <link rel="stylesheet" href="./Roboto.css">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
   <div id="app"></div>
+  <script>
+    const theme = localStorage.getItem('unload_theme');
+
+    if (theme === 'THEME_DARK' && document.body) {
+      document.body.style.backgroundColor = '#1c1c1c';
+    }
+  </script>
   <script src="/bundle.js"></script>
 </body>
 </html>

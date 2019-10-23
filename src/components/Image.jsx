@@ -1,7 +1,7 @@
 import React from 'react';
 import riew from 'riew/react';
 
-import loadImage from './effects/loadImage';
+import loadImage from './controller/loadImage';
 
 function Image({ image, getImage, pinImage, pin }) {
   if (image) {

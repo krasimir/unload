@@ -1,7 +1,7 @@
 import React from 'react';
 import riew from 'riew/react';
 
-import manageClock from './effects/clock';
+import manageClock from './controller/clock';
 
 function Clock({ date }) {
   return (

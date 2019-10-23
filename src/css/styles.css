@@ -7,7 +7,6 @@ body, html {
   width: 100%;
   height: 100%;
   color: #333333;
-  background: #f8f8f8;
 }
 * {
   box-sizing: border-box;
@@ -257,6 +256,9 @@ hr {
   width: 100%;
   height: 100%;
 }
+.layout.dark {
+  background: #1c1c1c;
+}
 @media all and (min-width: 1800px) {
   .layout {
     grid-template-columns: 30% 70%;
@@ -286,7 +288,7 @@ hr {
   background-size: cover;
   background-position: center;
   position: relative;
-  animation: fadeIn 400ms;
+  animation: fadeIn 800ms;
   overflow: hidden;
 }
 .image-controls {
@@ -325,9 +327,6 @@ hr {
   padding: 0.5em;
   display: grid;
   grid-template-rows: 100px 1fr;
-}
-.dark.todos {
-  background: #1c1c1c;
 }
 nav {
   text-align: center;

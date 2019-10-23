@@ -1,9 +1,10 @@
 import db from './utils/db';
 
-export default async function manageTodos({ data, state }) {
-  const todos = state(await db.get());
+import { todos } from '../../state';
+
+export default async function manageTodos({ data }) {
+  const [ , setTodos ] = todos;
   const toggle = todos.mutate(async (todos, todoToToggle) => {
-    // todoToToggle.done = !todoToToggle.done;
     const newTodos = todos.map(todo => ({
       ...todo,
       done: todoToToggle.id === todo.id ? !todo.done : todo.done
@@ -50,6 +51,8 @@ export default async function manageTodos({ data, state }) {
       return true;
     });
   });
+
+  setTodos(await db.get());
 
   data({
     todos,

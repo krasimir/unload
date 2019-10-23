@@ -6,9 +6,10 @@ import FileText from './icons/FileText.jsx';
 import ClockIcon from './icons/Clock.jsx';
 import Clock from './Clock.jsx';
 import Trash from './icons/Trash.jsx';
-import todosMode, { MODE_CLOCK, MODE_NODES } from './effects/todosMode';
-import todosTheme, { THEME_DARK, THEME_LIGHT } from './effects/todosTheme';
-import manageTodos, { getNewTodo } from './effects/todos';
+import todosMode, { MODE_CLOCK, MODE_NODES } from './controller/todosMode';
+import { THEME_DARK, THEME_LIGHT } from '../state';
+import todosTheme from './controller/todosTheme';
+import manageTodos, { getNewTodo } from './controller/todos';
 import Todo from './Todo.jsx';
 import Plus from './icons/Plus.jsx';
 import Sun from './icons/Sun.jsx';
@@ -66,7 +67,7 @@ function Todos({ mode, changeMode, todos, toggle, update, reorder, del, add, cle
     </DragDropContext>;
 
   return (
-    <div className={ `todos ${ theme === THEME_LIGHT ? 'light' : 'dark' }` }>
+    <div className='todos'>
       <nav className='tac'>
         <a className={ mode === MODE_NODES ? 'selected' : '' } onClick={ () => changeMode(MODE_NODES) }>
           <FileText />

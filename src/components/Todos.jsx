@@ -5,13 +5,15 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import FileText from './icons/FileText.jsx';
 import ClockIcon from './icons/Clock.jsx';
 import Clock from './Clock.jsx';
+import Trash from './icons/Trash.jsx';
 import todosMode, { MODE_CLOCK, MODE_NODES } from './effects/todosMode';
 import manageTodos, { getNewTodo } from './effects/todos';
 import Todo from './Todo.jsx';
 import Plus from './icons/Plus.jsx';
 
-function Todos({ mode, changeMode, todos, toggle, update, reorder, del, add }) {
+function Todos({ mode, changeMode, todos, toggle, update, reorder, del, add, clearCompleted }) {
   const [ newTodoUI, isNewTodoUIVisible ] = useState(false);
+  const completed = todos.filter(({ done }) => done).length;
 
   const moveTodo = (result) => {
     if (!result.destination) {
@@ -89,6 +91,17 @@ function Todos({ mode, changeMode, todos, toggle, update, reorder, del, add }) {
                     <a className='todo-action' onClick={ () => isNewTodoUIVisible(true) }><Plus /></a>
                   </div> }
               { todos.length > 0 && todosList }
+              <footer className='tac'>
+                <span style={ { padding: '0 8px' } }>{ completed }/{ todos.length }</span>
+                { completed > 0 &&
+                  <React.Fragment>
+                    <span> &#183; </span>
+                    <a className='todo-action' onClick={ clearCompleted }>
+                      <Trash size={ 12 }/> Clear completed
+                    </a>
+                  </React.Fragment>
+                }
+              </footer>
             </React.Fragment>
         }
       </div>

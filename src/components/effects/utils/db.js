@@ -21,8 +21,6 @@ function createDb() {
     archived = false,
     tags = []
   }) {
-    const allTodos = await api.get();
-    const maxOrder = Math.max(...allTodos.map(({ order }) => order));
     const newTodo = {
       created,
       finished,
@@ -30,7 +28,7 @@ function createDb() {
       done,
       archived,
       tags,
-      order: maxOrder + 1
+      order: 0
     };
 
     newTodo.id = await db.todos.add(newTodo);

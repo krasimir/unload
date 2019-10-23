@@ -1,13 +1,13 @@
 {
   "name": "unload-chrome-extension",
-  "version": "0.1.0",
+  "version": "1.0.6",
   "description": "A Chrome extension to unload your thoughts",
   "main": "index.js",
   "scripts": {
     "dev-server": "webpack-dev-server --config ./webpack.config.js --mode development --no-inline",
     "dev-start": "yarn minify-css && concurrently \"onchange ./src/css/*.css -- yarn minify-css\" \"yarn dev-server\"",
     "minify-css": "cat ./src/css/github.markdown.css ./src/css/styles.css | uglifycss > ./dist/styles.css",
-    "release": "webpack --config ./webpack.prod.js --mode production && rm -rf ./packages/* && node ./scripts/zip.js",
+    "release": "webpack --config ./webpack.prod.js --mode production && rm -rf ./packages/* && node ./scripts/version.js && node ./scripts/zip.js && open https://chrome.google.com/webstore/developer/edit/kokhekjlkeaeebldpgembnjieliikjcg",
     "lint": "./node_modules/.bin/eslint --ext .js src",
     "dev-site": "serve -l 8090"
   },

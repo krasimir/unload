@@ -2,11 +2,15 @@ import db from './utils/db';
 
 export default async function manageTodos({ data, state }) {
   const todos = state(await db.get());
-  const toggle = todos.mutate((todos, todoToToggle) => {
-    return todos.map(todo => ({
+  const toggle = todos.mutate(async (todos, todoToToggle) => {
+    // todoToToggle.done = !todoToToggle.done;
+    const newTodos = todos.map(todo => ({
       ...todo,
       done: todoToToggle.id === todo.id ? !todo.done : todo.done
     }));
+
+    await db.edit({ ...todoToToggle, done: !todoToToggle.done });
+    return newTodos;
   });
   const update = todos.mutate(async (todos, todoToUpdate) => {
     await db.edit(todoToUpdate);
@@ -29,7 +33,22 @@ export default async function manageTodos({ data, state }) {
   });
   const add = todos.mutate(async (todos, todo) => {
     const newTodo = await db.add(todo);
-    return [ newTodo, ...todos ];
+    const all = [ newTodo, ...todos ];
+
+    all.forEach((todo, i) => {
+      todo.order = i;
+      db.edit(todo);
+    });
+    return all;
+  });
+  const clearCompleted = todos.mutate(async (todos) => {
+    return todos.filter(todo => {
+      if (todo.done) {
+        db.delete(todo.id);
+        return false;
+      }
+      return true;
+    });
   });
 
   data({
@@ -38,7 +57,8 @@ export default async function manageTodos({ data, state }) {
     update,
     reorder,
     del,
-    add
+    add,
+    clearCompleted
   });
 }
 

@@ -82,7 +82,7 @@ function Todo({ todo, toggle, update, defaultEditMode, del, onClose }) {
             </div> :
             <div className='text' dangerouslySetInnerHTML={ { __html: formatText(todo.text) } } />
         }
-        <div className='vac'>
+        <div>
           { editMode ?
             null :
             <div className='cf options'>

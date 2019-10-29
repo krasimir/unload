@@ -32,6 +32,7 @@ function Todo({ todo, toggle, update, defaultEditMode, del, onClose }) {
   const field = useRef(null);
   const [ editMode, toggleEditMode ] = useState(defaultEditMode);
   const isItANewTodo = !update && !del;
+  const borderLeft = todo.color ? `solid 6px ${ todo.color }` : 'none';
 
   useEffect(() => {
     if (editMode) {
@@ -64,7 +65,7 @@ function Todo({ todo, toggle, update, defaultEditMode, del, onClose }) {
   }
 
   return (
-    <li className={ `todo ${ todo.done ? 'done' : '' } ${ editMode ? 'editing' : '' }` }>
+    <li className={ `todo ${ todo.done ? 'done' : '' } ${ editMode ? 'editing' : '' }` } style={ { borderLeft } }>
       <div className='content' style={ isItANewTodo ? { display: 'block' } : {} }>
         <div style={ { marginTop: '6px' } }>
           {

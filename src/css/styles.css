@@ -308,16 +308,16 @@ hr {
   background: rgba(255, 255, 255, 0.8);
 }
 .image-loading {
-  padding: 6em;
   font-size: 1em;
-  font-style: italic;
-  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#c9c3c3+0,f2f2f2+100 */
-  background: #c9c3c3; /* Old browsers */
-  background: -moz-linear-gradient(-45deg,  #c9c3c3 0%, #f2f2f2 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(-45deg,  #c9c3c3 0%,#f2f2f2 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(135deg,  #c9c3c3 0%,#f2f2f2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c9c3c3', endColorstr='#f2f2f2',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
+  background: #cdcdcd;
+  position: relative;
+}
+.dark .image-loading {
+  background: #121010;
+}
+.image-loading > div {
+  position: absolute;
+  top: calc(50% - 30px);
 }
 
 /******************************************** Todos */
@@ -431,6 +431,8 @@ nav {
 }
 .text {
   padding: 0.5em;
+  word-wrap: break-word;
+  overflow: hidden;
 }
 .text textarea {
   width: 100%;
@@ -456,3 +458,41 @@ footer a {
 .dark footer {
   color: #4e4e4e;
 }
+
+/******************************************** Loading */
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 51px;
+  height: 51px;
+  margin: 6px;
+  border: 6px solid #999;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #999 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+

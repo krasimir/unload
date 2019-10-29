@@ -1,4 +1,3 @@
-const USE_MOCK = false;
 const AK = '563492ad6f917000010000018fedee73b8fd45eeab685d32eabdaa57';
 const LS_IMAGE_ITEM = 'unload_image';
 const LS_DATA_ITEM = 'unload_data';
@@ -21,25 +20,39 @@ export default async function loadImage({ data, state }) {
   const pin = state(!!localStorage.getItem(LS_IMAGE_ITEM));
   const image = state(null);
   const getImage = image.mutate(() => null).mutate(async (current, shouldFetchANewOne) => {
-    let data;
+    let data, fetchData;
 
     if (pin()) {
       return JSON.parse(localStorage.getItem(LS_IMAGE_ITEM));
     }
 
     try {
-      if (USE_MOCK) {
-        data = mockedAPIResponse;
-      } else {
-        if (!localStorage.getItem(LS_DATA_ITEM) || shouldFetchANewOne) {
-          data = await (await fetch(
-            'https://api.pexels.com/v1/curated?per_page=30&page=1',
-            { headers: { Authorization: AK } }
-          )).json();
-          localStorage.setItem(LS_DATA_ITEM, JSON.stringify(data));
+      if (shouldFetchANewOne) {
+        fetchData = true;
+      } else if (localStorage.getItem(LS_DATA_ITEM)) {
+        data = JSON.parse(localStorage.getItem(LS_DATA_ITEM));
+        let now = new Date();
+        let lastUpdate = new Date(data.lastUpdate);
+        let diffInH = Math.abs(now - lastUpdate) / 36e5;
+
+        if (diffInH >= 24) {
+          fetchData = true;
         } else {
-          data = JSON.parse(localStorage.getItem(LS_DATA_ITEM));
+          let percent = ((24 - diffInH) / 24 * 100).toFixed(2);
+          fetchData = false;
+          console.log(`Unload: next photos fetch - %${ percent } out of 24h left`);
         }
+      } else {
+        fetchData = false;
+      }
+
+      if (fetchData) {
+        data = await (await fetch(
+          'https://api.pexels.com/v1/curated?per_page=30&page=1',
+          { headers: { Authorization: AK } }
+        )).json();
+        data.lastUpdate = new Date();
+        localStorage.setItem(LS_DATA_ITEM, JSON.stringify(data));
       }
 
       const photo = data.photos[random(0, 20)];
@@ -78,6 +91,17 @@ export default async function loadImage({ data, state }) {
     return false;
   });
 
-  data({ image, getImage, pinImage: () => pinImage(), pin });
+  data({
+    image,
+    getImage(shouldFetchANewOne) {
+      unpinImage();
+      getImage(shouldFetchANewOne);
+    },
+    pinImage() {
+      pinImage();
+    },
+    pin
+  });
+
   getImage();
 };

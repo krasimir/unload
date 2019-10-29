@@ -25,7 +25,10 @@ function Image({ image, getImage, pinImage, pin }) {
   }
   return (
     <div className='image-loading tac'>
-      <small>Loading the image. Please wait.</small>
+      <div className='lds-ring'>
+        <div />
+        <div />
+      </div>
     </div>
   );
 }

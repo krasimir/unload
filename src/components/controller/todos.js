@@ -51,11 +51,41 @@ export default async function manageTodos({ data }) {
       return true;
     });
   });
+  const colorTodos = todos.map(todos => {
+    const colors = {};
+    const getStart = todo => todo.text.split(' ').shift();
+
+    todos.forEach(todo => {
+      const start = getStart(todo);
+
+      if (!colors[start]) {
+        colors[start] = [ todo.id ];
+      } else {
+        colors[start].push(todo.id);
+      }
+    });
+
+    Object.keys(colors).forEach(start => {
+      if (colors[start].length >= 2) {
+        const color = randomRGB();
+
+        todos.forEach(todo => {
+          if (colors[start].indexOf(todo.id) >= 0) {
+            todo.color = color;
+          }
+        });
+      } else {
+        todos.find(todo => todo.id === colors[start][0]).color = false;
+      }
+    });
+
+    return todos;
+  });
 
   setTodos(await db.get());
 
   data({
-    todos,
+    todos: colorTodos,
     toggle,
     update,
     reorder,
@@ -69,4 +99,9 @@ export function getNewTodo() {
   return {
     text: ''
   };
+}
+
+function randomRGB() {
+  var o = Math.round, r = Math.random, s = 255;
+  return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
 }

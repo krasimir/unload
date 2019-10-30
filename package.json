@@ -1,6 +1,6 @@
 {
   "name": "unload-chrome-extension",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "A Chrome extension to unload your thoughts",
   "main": "index.js",
   "scripts": {

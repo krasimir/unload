@@ -257,7 +257,8 @@ hr {
   height: 100%;
 }
 .layout.dark {
-  background: #1c1c1c;
+  background: rgb(28,28,28);
+  background: linear-gradient(227deg,rgb(37, 37, 37) 0,rgb(26, 26, 26) 100%);
 }
 @media all and (min-width: 1800px) {
   .layout {

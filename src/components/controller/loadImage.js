@@ -2,8 +2,6 @@ const AK = '563492ad6f917000010000018fedee73b8fd45eeab685d32eabdaa57';
 const LS_IMAGE_ITEM = 'unload_image';
 const LS_DATA_ITEM = 'unload_data';
 
-import mockedAPIResponse from '../../_mocks/curated.json';
-
 function random(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
@@ -48,7 +46,7 @@ export default async function loadImage({ data, state }) {
 
       if (fetchData) {
         data = await (await fetch(
-          'https://api.pexels.com/v1/curated?per_page=30&page=1',
+          'https://api.pexels.com/v1/search?query=nature+landscape+earth&per_page=30&page=1',
           { headers: { Authorization: AK } }
         )).json();
         data.lastUpdate = new Date();

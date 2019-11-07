@@ -46,7 +46,7 @@ export default async function loadImage({ data, state }) {
 
       if (fetchData) {
         data = await (await fetch(
-          'https://api.pexels.com/v1/search?query=nature+landscape&per_page=30&page=1',
+          `https://api.pexels.com/v1/search?query=nature+landscape&per_page=30&page=${random(1, 30)}`,
           { headers: { Authorization: AK } }
         )).json();
         data.lastUpdate = new Date();

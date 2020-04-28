@@ -6,7 +6,7 @@ import FileText from './icons/FileText.jsx';
 import ClockIcon from './icons/Clock.jsx';
 import Clock from './Clock.jsx';
 import Trash from './icons/Trash.jsx';
-import todosMode, { MODE_CLOCK, MODE_NODES } from './controller/todosMode';
+import todosMode, { MODE_CLOCK, MODE_NODES, MODE_SETTINGS } from './controller/todosMode';
 import { THEME_DARK, THEME_LIGHT } from '../state';
 import todosTheme from './controller/todosTheme';
 import manageTodos, { getNewTodo } from './controller/todos';
@@ -14,6 +14,8 @@ import Todo from './Todo.jsx';
 import Plus from './icons/Plus.jsx';
 import Sun from './icons/Sun.jsx';
 import Moon from './icons/Moon.jsx';
+import Gear from './icons/Gear.jsx';
+import Settings from './Settings.jsx';
 
 function Todos({ mode, changeMode, todos, toggle, update, reorder, del, add, clearCompleted, theme, changeTheme }) {
   const [ newTodoUI, isNewTodoUIVisible ] = useState(false);
@@ -78,38 +80,42 @@ function Todos({ mode, changeMode, todos, toggle, update, reorder, del, add, cle
         <a onClick={ () => changeTheme(theme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT) }>
           { theme === THEME_LIGHT ? <Moon /> : <Sun /> }
         </a>
+        <a className={ mode === MODE_SETTINGS ? 'selected' : '' } onClick={ () => changeMode(MODE_SETTINGS) }>
+          <Gear />
+        </a>
       </nav>
       <div className={ mode === MODE_CLOCK ? 'vac' : '' }>
         {
-          mode === MODE_CLOCK ?
-            <Clock /> :
-            <React.Fragment>
-              { newTodoUI ?
-                  <ul className='mb03'>
-                    <Todo
-                      defaultEditMode
-                      todo={ getNewTodo() }
-                      onClose={ (todo) => {
-                        isNewTodoUIVisible(false);
-                        add(todo);
-                       } }/>
-                  </ul> :
-                  <div className='tac mb1'>
-                    <a className='todo-action' onClick={ () => isNewTodoUIVisible(true) }><Plus /></a>
-                  </div> }
-              { todos.length > 0 && todosList }
-              <footer className='tac'>
-                <span style={ { padding: '0 8px' } }>{ completed }/{ todos.length }</span>
-                { completed > 0 &&
-                  <React.Fragment>
-                    <span> &#183; </span>
-                    <a className='todo-action' onClick={ clearCompleted }>
-                      <Trash size={ 12 }/> Clear completed
-                    </a>
-                  </React.Fragment>
-                }
-              </footer>
-            </React.Fragment>
+          mode === MODE_SETTINGS ? <Settings /> :
+            mode === MODE_CLOCK ?
+              <Clock /> :
+              <React.Fragment>
+                { newTodoUI ?
+                    <ul className='mb03'>
+                      <Todo
+                        defaultEditMode
+                        todo={ getNewTodo() }
+                        onClose={ (todo) => {
+                          isNewTodoUIVisible(false);
+                          add(todo);
+                        } }/>
+                    </ul> :
+                    <div className='tac mb1'>
+                      <a className='todo-action' onClick={ () => isNewTodoUIVisible(true) }><Plus /></a>
+                    </div> }
+                { todos.length > 0 && todosList }
+                <footer className='tac'>
+                  <span style={ { padding: '0 8px' } }>{ completed }/{ todos.length }</span>
+                  { completed > 0 &&
+                    <React.Fragment>
+                      <span> &#183; </span>
+                      <a className='todo-action' onClick={ clearCompleted }>
+                        <Trash size={ 12 }/> Clear completed
+                      </a>
+                    </React.Fragment>
+                  }
+                </footer>
+              </React.Fragment>
         }
       </div>
     </div>

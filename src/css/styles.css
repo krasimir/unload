@@ -496,4 +496,27 @@ footer a {
     transform: rotate(360deg);
   }
 }
-
+.settings h2 {
+  margin: 2em 0 2em 0;
+  text-align: center;
+}
+.dark .settings h2  {
+  color: #757575;
+}
+.settings p {
+  width: 90%;
+  margin: 0 auto 0.6em auto;
+}
+.dark .settings p  {
+  color: #757575;
+}
+.settings input[type="text"] {
+  display: block;
+  width: 90%;
+  margin: 0 auto;
+  background: none;
+}
+.dark .settings input[type="text"] {
+  color: #999;
+  border: solid 2px #4a4a4a;
+}

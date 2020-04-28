@@ -1,3 +1,6 @@
+import { settings } from '../../state';
+import { subscribe } from 'riew';
+
 const AK = '563492ad6f917000010000018fedee73b8fd45eeab685d32eabdaa57';
 const LS_IMAGE_ITEM = 'unload_image';
 const LS_DATA_ITEM = 'unload_data';
@@ -40,13 +43,16 @@ export default async function loadImage({ data, state }) {
           fetchData = false;
           console.log(`Unload: next photos fetch - %${ percent } out of 24h left`);
         }
+      } else if (!data) {
+        fetchData = true;
       } else {
         fetchData = false;
       }
 
       if (fetchData) {
+        const keywords = settings().keywords.split(' ').join('+');
         data = await (await fetch(
-          `https://api.pexels.com/v1/search?query=nature+landscape&per_page=30&page=${random(1, 30)}`,
+          `https://api.pexels.com/v1/search?query=${keywords}&per_page=30&page=${random(1, 30)}`,
           { headers: { Authorization: AK } }
         )).json();
         data.lastUpdate = new Date();
@@ -88,6 +94,11 @@ export default async function loadImage({ data, state }) {
     localStorage.removeItem(LS_IMAGE_ITEM);
     return false;
   });
+
+  subscribe(settings.pipe((newOnes) => {
+    unpinImage();
+    getImage(true);
+  }));
 
   data({
     image,
